@@ -30,3 +30,27 @@ run_jn_16:
 
 run_jn_32:
 	ssh group1@${DEVICE} "cd ~/${ECSAM_PATH}/.. && python3 mnist_jn.py -p 32 -g ${GROUP}"
+
+scp_jpg:
+	scp group${GROUP}.jpg  group1@${DEVICE}:~/EESAM/obj_detect/selfies​/
+
+ifndef MODEL_OB
+$(error ERROR! Please, provide your selected model for object detection. Example: make MODEL_OB=mobilenet_v1)
+endif
+
+run_selfies:
+	ssh group1@${DEVICE} "cd EESAM/obj_detect && python3 detect_selfies.py selfies -m ${MODEL_OB}"
+
+ifndef BATCH_SIZE
+$(error ERROR! Please, provide your selected batch_size. Example: make BATCH_SIZE=1)
+endif
+
+ifndef PRECISION
+$(error ERROR! Please, provide your selected precision. Example: make PRECISION=016
+endif
+
+run_ob:
+	ssh group1@${DEVICE} "cd EESAM/obj_detect && python3 voc_evaluation_test.py -f -p ${PRECISION} -b ${BATCH_SIZE} -m ${MODEL_OB} -voc /home/shared/VOC2007"
+
+ssh:
+	ssh group1@${DEVICE}
