@@ -40,7 +40,10 @@ run_jn_32:
 	./sshexpect.sh ${DEVICE} "cd ~/${ECSAM_PATH}/.. && python3 mnist_jn.py -p 32 -g ${GROUP}"
 
 scp_jpg:
-	./scpexpect.sh group${GROUP}.jpg  group1@${DEVICE}:~/EESAM/obj_detect/selfies​
+	./scpexpect.sh group${GROUP}.jpg group1@${DEVICE}:~/EESAM/obj_detect/selfies​
+	
+scp_inferred:
+	./scpexpect.sh group1@${DEVICE}:~/EESAM/obj_detect/selfies_results/group${GROUP}_resized_inferred.jpg .
 
 ifndef MODEL_OB
 override MODEL_OB = mobilenet_v1
@@ -59,3 +62,9 @@ endif
 
 run_ob:
 	./sshexpect.sh ${DEVICE} "cd EESAM/obj_detect && python3 voc_evaluation_test.py -f -p ${PRECISION} -b ${BATCH_SIZE} -m ${MODEL_OB} -voc /home/shared/VOC2007"
+	
+metrics:
+	./sshexpect.sh ${DEVICE} "cd EESAM/obj_detect && cat metrics.log"
+
+scp_metrics:
+	./scpexpect.sh group1@${DEVICE}:~/EESAM/obj_detect/metrics.log .
