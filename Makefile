@@ -1,11 +1,11 @@
 # Command example: <command> GROUP=0 BOARD_NUMBER=0 [MODEL_OB=mobilenet_v1] [BATCH_SIZE=1 PRECISION=16]
 
 ifndef GROUP
-$(error ERROR! Please, provide your group number. Example: make GROUP=0)
+$(error ERROR! Please, provide your group number. Example: make <cmd> GROUP=0)
 endif
 
 ifndef BOARD_NUMBER
-$(error ERROR! Please, provide your board number. Example: make BOARD_NUMBER=0)
+$(error ERROR! Please, provide your board number. Example: make <cmd> BOARD_NUMBER=0)
 endif
 
 export MODEL=trained_lenet5
