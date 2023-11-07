@@ -16,6 +16,9 @@ export ECSAM_PATH=EESAM/mnist_jn/build${GROUP}
 ssh:
 	./sshexpect.sh ${DEVICE} ''
 
+sshy:
+	./sshexpect.sh ${DEVICE} '-Y'
+
 init_cuda:
 	cd template_plugin && cmake . -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc
 
